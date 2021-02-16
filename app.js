@@ -39,7 +39,7 @@ connection.connect((err) => {
 // Variable globale pour mysql : util.promisify de node.js lié avec .bind()
 global.query = util.promisify(connection.query).bind(connection);
 
-// Express session MySQL
+// Express session MySQL pour récupérer les cookies dans la db
 const sessionStore = new MySQLStore({}, connection);
 
 // Express Session
@@ -65,7 +65,6 @@ const verifyAuth = require("./middlewares/verifyAuth");
 const index = require("./routes/indexRoute");
 const auth = require("./routes/authRoute");
 const dashboard = require("./routes/dashboardRoute");
-const { options } = require("./routes/indexRoute");
 
 app.use("/", index);
 app.use("/auth", auth);

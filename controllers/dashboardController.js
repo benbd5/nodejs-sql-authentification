@@ -1,5 +1,6 @@
 const get_dashboard_page = (req, res) => {
-  res.render("dashboard");
+  const user = req.session.user;
+  res.render("dashboard", { user });
 };
 
 module.exports = {

@@ -102,9 +102,17 @@ const post_register = async (req, res) => {
   }
 };
 
+//  --------------- Logout ---------------
+const get_logout = async (req, res) => {
+  req.session.destroy(function (err) {
+    res.redirect("/auth/login");
+  });
+};
+
 module.exports = {
   get_login_page,
   get_register_page,
   post_register,
   post_login,
+  get_logout,
 };

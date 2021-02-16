@@ -3,6 +3,7 @@ const authController = require("../controllers/authController");
 
 // Login
 router.get("/login", authController.get_login_page);
+router.post("/login", authController.post_login);
 
 // Register
 router.get("/register", authController.get_register_page);

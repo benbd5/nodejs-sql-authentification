@@ -2,6 +2,8 @@ const express = require("express"),
   app = express(),
   port = 3000,
   util = require("util"),
+  session = require("express-session"),
+  flash = require("connect-flash"),
   mysql = require("mysql");
 
 // Dotenv
@@ -35,6 +37,21 @@ connection.connect((err) => {
 
 // Variable globale pour mysql : util.promisify de node.js lié avec .bind()
 global.query = util.promisify(connection.query).bind(connection);
+
+// Express Session
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false, // force à ce qu'une nouvelle session soit crée
+    saveUninitialized: true, // force à ce qu'une nouvelle session soit enregistrée
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // le cookie dure 24h
+    },
+  })
+);
+
+// Messages flash
+app.use(flash());
 
 // Routes
 const index = require("./routes/indexRoute");

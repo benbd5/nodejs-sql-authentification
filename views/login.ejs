@@ -10,7 +10,28 @@
     <div class="col-md-6">
       <!-- Sign in -->
 
-      <form action="" method="POST">
+      <!-- Message de succès d'inscription -->
+      <% if (messageRegisterSuccess.length > 0) { %>
+      <div class="alert alert-success" role="alert">
+        <%= messageRegisterSuccess %>
+      </div>
+      <% } %>
+
+      <!-- Message d'erreur de connexion : inscription non effectuée -->
+      <% if (messageNotRegistered.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= messageNotRegistered %> <a href="/auth/register">Inscrivez-vous</a>
+      </div>
+      <% } %>
+
+      <!-- Message d'erreur de connexion : mot de passe incorrect -->
+      <% if (messagePasswordIncorrect.length > 0) { %>
+      <div class="alert alert-warning" role="alert">
+        <%= messagePasswordIncorrect %>
+      </div>
+      <% } %>
+
+      <form action="/auth/login" method="POST">
         <div class="mb-4">
           <h2 class="h4">Se connecter</h2>
         </div>

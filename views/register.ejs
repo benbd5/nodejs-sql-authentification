@@ -10,6 +10,12 @@
     <div class="col-md-6">
       <!-- Sign in -->
 
+      <% if (messageEmailUsed.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= messageEmailUsed %>
+      </div>
+      <% } %>
+
       <form action="/auth/register" method="POST">
         <div class="mb-4">
           <h2 class="h4">S'inscrire</h2>

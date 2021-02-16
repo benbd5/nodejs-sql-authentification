@@ -4,6 +4,7 @@ const express = require("express"),
   util = require("util"),
   session = require("express-session"),
   flash = require("connect-flash"),
+  MySQLStore = require("express-mysql-session")(session),
   mysql = require("mysql");
 
 // Dotenv
@@ -38,6 +39,9 @@ connection.connect((err) => {
 // Variable globale pour mysql : util.promisify de node.js lié avec .bind()
 global.query = util.promisify(connection.query).bind(connection);
 
+// Express session MySQL
+const sessionStore = new MySQLStore({}, connection);
+
 // Express Session
 app.use(
   session({
@@ -47,6 +51,7 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, // le cookie dure 24h
     },
+    store: sessionStore, // SessionsStore pour récupérer les cookies dans la db
   })
 );
 
@@ -60,6 +65,7 @@ const verifyAuth = require("./middlewares/verifyAuth");
 const index = require("./routes/indexRoute");
 const auth = require("./routes/authRoute");
 const dashboard = require("./routes/dashboardRoute");
+const { options } = require("./routes/indexRoute");
 
 app.use("/", index);
 app.use("/auth", auth);

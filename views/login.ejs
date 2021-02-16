@@ -31,6 +31,13 @@
       </div>
       <% } %>
 
+      <!-- Message d'erreur d'accès au tableau de bord : non connecté -->
+      <% if (messageNotConnected.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= messageNotConnected %>
+      </div>
+      <% } %>
+
       <form action="/auth/login" method="POST">
         <div class="mb-4">
           <h2 class="h4">Se connecter</h2>

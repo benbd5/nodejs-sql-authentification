@@ -53,6 +53,9 @@ app.use(
 // Messages flash
 app.use(flash());
 
+// Middleware authentification
+const verifyAuth = require("./middlewares/verifyAuth");
+
 // Routes
 const index = require("./routes/indexRoute");
 const auth = require("./routes/authRoute");
@@ -60,7 +63,7 @@ const dashboard = require("./routes/dashboardRoute");
 
 app.use("/", index);
 app.use("/auth", auth);
-app.use("/dashboard", dashboard);
+app.use("/dashboard", verifyAuth.get_verify_auth, dashboard);
 
 app.get("*", function (req, res) {
   res.render("404");

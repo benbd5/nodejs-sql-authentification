@@ -7,6 +7,7 @@ const get_login_page = (req, res) => {
     messageRegisterSuccess: req.flash("messageRegisterSuccess"),
     messageNotRegistered: req.flash("messageNotRegistered"),
     messagePasswordIncorrect: req.flash("messagePasswordIncorrect"),
+    messageNotConnected: req.flash("messageNotConnected"),
   });
 };
 
@@ -35,6 +36,18 @@ const post_login = async (req, res) => {
   if (!passwordCkeck) {
     req.flash("messagePasswordIncorrect", "Mot de passe incorrect");
     return res.redirect("/auth/login");
+  } else {
+    req.session.userId = user[0].userID;
+
+    // récupérer les infos de l'utilisateur et les stocker dans la session
+    req.session.user = {
+      id: user[0].userID,
+      firstname: user[0].firstname,
+      lastname: user[0].lastname,
+      email: user[0].email,
+    };
+    console.log("session :", req.session.user);
+    return res.redirect("/dashboard");
   }
 };
 
